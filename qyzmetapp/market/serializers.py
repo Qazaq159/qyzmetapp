@@ -27,7 +27,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
                 }
             )
 
-        if not re.match(r'^7([0-9]{10})', attrs['phone']):
+        if not re.match(r'^\+?[78]([0-9]{10})$', attrs['phone']):
             raise serializers.ValidationError(
                 {
                     'phone': 'Phone number must be as "7XXXQQQAABB"'
