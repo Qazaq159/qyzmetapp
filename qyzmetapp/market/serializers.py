@@ -1,8 +1,7 @@
 import re
-
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-
+from subscriptions.models import Subscription
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     name = serializers.CharField(write_only=True, max_length=255)
@@ -41,3 +40,19 @@ class RegisterUserSerializer(serializers.ModelSerializer):
                 }
             )
         return attrs
+
+class UserResource(serializers.ModelSerializer):
+    subscription = serializers.SerializerMethodField()
+    class Meta:
+        model = get_user_model()
+        fields = ['id', 'name', 'phone', 'email', 'role', 'balance', 'subscription']
+    
+    def get_subscription(self, obj):
+        if obj.role == 'DEVELOPER':
+            subscription = Subscription.objects.filter(user=obj).first()
+            if subscription and subscription.is_active():
+                return {
+                    'isActive': True, 
+                    'expiresAt': subscription.expires_at.isoformat(), 
+                }
+        return None
