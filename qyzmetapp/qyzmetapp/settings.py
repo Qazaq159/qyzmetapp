@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +23,8 @@ INSTALLED_APPS = [
     'market',
     'corsheaders',
     'orders',
-    'subscriptions'
+    'subscriptions',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -151,3 +154,8 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 }
+
+
+# Stripe
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
