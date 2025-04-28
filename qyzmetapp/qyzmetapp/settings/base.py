@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'orders',
     'subscriptions',
     'payments',
+    'chats'
 ]
 
 MIDDLEWARE = [
