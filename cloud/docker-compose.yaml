@@ -1,4 +1,5 @@
 volumes:
+  static_data:
   postgres_master_data:
   postgres_replica_data:
 
@@ -6,9 +7,15 @@ services:
   web:
     image: ferkinkz/qyzmetapp.back:latest
     restart: always
+    ports:
+      - 8000:8000
     depends_on:
       - master_db
       - replica_db
+    volumes:
+      - static_data:/code/qyzmetapp/static/
+    environment:
+      - DJANGO_SETTINGS_MODULE=qyzmetapp.settings.test
 
   master_db:
     image: postgres:12-alpine
