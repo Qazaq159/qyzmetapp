@@ -4,7 +4,7 @@ volumes:
 
 services:
   web:
-    image: ferkinkz/qyzmet.back
+    image: ferkinkz/qyzmetapp.back:latest
     restart: always
     depends_on:
       - master_db
